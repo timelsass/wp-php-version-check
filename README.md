@@ -3,11 +3,17 @@ Composer package to verify that WordPress and PHP versions satisfy a minimum ver
 
 -------------------------------------------
 
+What does it do?  If an environment does not meet the minimum PHP or WordPress version requirements, the plugin is deactivated and an error admin notice is shown in the admin dashboard.  The notice informs the user of the minimum requirements, and their current versions of WordPress and PHP so they can change their environment to satisfy the plugin's version requirements.  If the user activates the plugin through WP-CLI then a WP-CLI Warning is displayed informing them of the same information.
+
+## Installation
+
 Using composer, you can get started quickly:
 
 ```php
 $ composer require timelsass/wp-php-version-check
 ```
+
+## Usage
 
 We aren't going to be using the autoloader for this package because WordPress supports PHP 5.2 as a minimum, and this is just a single class.  In your code you would add to your main plugin file after the headers, something like this:
 
