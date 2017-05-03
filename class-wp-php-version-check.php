@@ -48,10 +48,11 @@ if ( ! class_exists( 'Wp_Php_Version_Check' ) ) {
 		 * @param  string $plugin       Root plugin file.
 		 * @param  string $php_version  Minimum PHP version required.
 		 * @param  string $wp_version   Minimum WordPress version required.
+		 * @param  mixed  $callback     Callback method to call if version check passes.
 		 *
 		 * @return null
 		 */
-		public static function init( $plugin, $wp_version, $php_version ) {
+		public static function init( $plugin, $wp_version, $php_version, $callback = null ) {
 			self::$plugin = $plugin;
 			self::$php_version = $php_version;
 			self::$wp_version = $wp_version;
@@ -67,8 +68,20 @@ if ( ! class_exists( 'Wp_Php_Version_Check' ) ) {
 					add_action( 'admin_init', array( __CLASS__, 'deactivate' ) );
 				}
 			} else {
-				// Add success hook to init for plugins to initialize on.
-				add_action( 'init', array( __CLASS__, 'success_hook' ) );
+				// Checks for cb and args passed.
+				if ( is_callable( $callback ) ) {
+					$arguments = array();
+					$args = func_num_args();
+					for ( $i = 4; $i < $args; $i++ ) {
+						$arg = func_get_arg($i);
+						$arguments[] = $arg;
+					}
+					// Call the callback with any args required.
+					call_user_func_array( $callback, $arguments );
+				} else {
+					// Add success hook to init for plugins to initialize on.
+					add_action( 'init', array( __CLASS__, 'success_hook' ) );
+				}
 			}
 		}
 
