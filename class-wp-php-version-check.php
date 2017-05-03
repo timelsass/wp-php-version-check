@@ -51,7 +51,7 @@ if ( ! class_exists( 'Wp_Php_Version_Check' ) ) {
 		 *
 		 * @return null
 		 */
-		public static function init( $plugin, $wp_version = '4.2', $php_version = '5.3' ) {
+		public static function init( $plugin, $wp_version, $php_version ) {
 			self::$plugin = $plugin;
 			self::$php_version = $php_version;
 			self::$wp_version = $wp_version;
