@@ -20,7 +20,7 @@ I haven't really seen any reliable packages that perform this functionality when
 
 ### What does it do?
 
-If an environment does not meet the minimum PHP or WordPress version requirements, the plugin is deactivated and an error admin notice is shown in the admin dashboard.  The notice informs the user of the minimum requirements, and their current versions of WordPress and PHP so they can change their environment to satisfy the plugin's version requirements.  If the user activates the plugin through WP-CLI then a WP-CLI Warning is displayed informing them of the same information.
+If an environment does not meet the minimum PHP or WordPress version requirements, the plugin is deactivated and an error admin notice is shown in the admin dashboard.  The notice informs the user of the minimum requirements, and their current versions of WordPress and PHP so they can change their environment to satisfy the plugin's version requirements.  If the user activates the plugin through WP-CLI then a WP-CLI Warning is displayed informing them of the same information.  The plugin is then able to run it's code in the WordPress init hook using the generated hook name, or it call a callable method to run it's initialization code if init is not desirable.
 
 ---
 
@@ -44,15 +44,17 @@ if ( ! class_exists( 'Wp_Php_Version_Check' ) ) {
 }
 ```
 
-The init method takes three parameters:
+The init method accepts four parameters:
 
 ```php
-Wp_Php_Version_Check::init( $plugin, $wp_version, $php_version );
+Wp_Php_Version_Check::init( $plugin, $wp_version, $php_version (, $callback, ...$args) );
 ```
 
-1. `$plugin` - The main plugin file relative to the plugins directory.  Usually you would use: `plugin_basename( __FILE__ )`.
-2. `$wp_version` - (default is 4.7) The minimum WordPress version required for your plugin to work.
-3. `$php_version` - (default is 5.3) The minimum PHP version required for your plugin to work.
+1. `$plugin`      - The main plugin file relative to the plugins directory.  Usually you would use: `plugin_basename( __FILE__ )`.
+2. `$wp_version`  - The minimum WordPress version required for your plugin to work.
+3. `$php_version` - The minimum PHP version required for your plugin to work.
+4. `$callback`    - (Optional) A callable method.  The format should be like all other callables.
+5. `...$args`     - (Optional) Any number of arguments to pass to the callable method. `$arg1, $arg2, $arg3` etc.
 
 You simply need to initialize the version checking with the necessary parameters, like this:
 
@@ -72,11 +74,25 @@ add_action( 'example-plugin:init', function() {
 });
 ```
 
+It may not be desirable to add your initialization code to the init hook, so an optional parameter, `$callback`, is provided.  The callback expects a callable method to be used, or it will default back to adding the hook to init.  The callable format is the same as other WordPress callbacks/callable methods in general, and additional arguments are passed by including them after the callback argument.
+
+This example shows how you would implement a callback with 2 required arguments:
+
+```php
+Wp_Php_Version_Check::init( plugin_basename( __FILE__ ), '4.7', '5.3', 'example_plugin_init', true, 'The plugin has been initialized!' );
+
+function example_plugin_init( $passed, $message ) {
+    if ( $passed ) {
+        wp_die( $message );
+    }
+}
+```
+
 ---
 
 ### Example
 
-Here's a full example that you can use:
+Here's a full example that you can use showing a version check for WordPress 4.0 and PHP 5.6 and running the plugin initialization code on the WordPress init hook:
 
 ```php
 /**
