@@ -18,21 +18,21 @@ if ( ! class_exists( 'Wp_Php_Version_Check' ) ) {
 	class Wp_Php_Version_Check {
 
 		/**
-		 * @var    string $plugin      Main plugin file.
+		 * @var string $plugin Main plugin file.
 		 *
 		 * @access private
 		 */
 		private static $plugin;
 
 		/**
-		 * @var    string $php_version Minimum PHP version required.
+		 * @var string $php_version Minimum PHP version required.
 		 *
 		 * @access private
 		 */
 		private static $php_version;
 
 		/**
-		 * @var    string $wp_version  Minimum WordPress version required.
+		 * @var string $wp_version Minimum WordPress version required.
 		 *
 		 * @access private
 		 */
@@ -45,10 +45,10 @@ if ( ! class_exists( 'Wp_Php_Version_Check' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @param  string $plugin       Root plugin file.
-		 * @param  string $php_version  Minimum PHP version required.
-		 * @param  string $wp_version   Minimum WordPress version required.
-		 * @param  mixed  $callback     Callback method to call if version check passes.
+		 * @param  string   $plugin      Root plugin file.
+		 * @param  string   $php_version Minimum PHP version required.
+		 * @param  string   $wp_version  Minimum WordPress version required.
+		 * @param  callable $callback    Callback method to call if version check passes.
 		 *
 		 * @return null
 		 */
@@ -91,7 +91,7 @@ if ( ! class_exists( 'Wp_Php_Version_Check' ) ) {
 		 * This is where plugins can hook to run their initialization code
 		 * once passing the PHP and WordPress version checks.
 		 *
-		 * @since 1.0.0
+		 * @since  1.0.0
 		 *
 		 * @access public
 		 *
@@ -143,7 +143,7 @@ if ( ! class_exists( 'Wp_Php_Version_Check' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @return bool  Is this not meeting version requirements?
+		 * @return bool   Is this not meeting version requirements?
 		 */
 		public static function is_bad() {
 			return self::is_bad_php() || self::is_bad_wp();
@@ -156,7 +156,7 @@ if ( ! class_exists( 'Wp_Php_Version_Check' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @return bool  Is this not meeting PHP version requirements?
+		 * @return bool   Is this not meeting PHP version requirements?
 		 */
 		public static function is_bad_php() {
 			return version_compare( PHP_VERSION, self::$php_version, '<' );
@@ -169,7 +169,7 @@ if ( ! class_exists( 'Wp_Php_Version_Check' ) ) {
 		 *
 		 * @access public
 		 *
-		 * @return bool  Is this not meeting WordPress version requirements?
+		 * @return bool   Is this not meeting WordPress version requirements?
 		 */
 		public static function is_bad_wp() {
 			return version_compare( get_bloginfo( 'version' ), self::$wp_version, '<' );
