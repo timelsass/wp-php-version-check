@@ -1,0 +1,14 @@
+{
+    "name": "timelsass/wp-php-version-check",
+    "description": "Composer package to verify that WordPress and PHP versions satisfy a minimum version requirement.",
+    "license": "GPL2.0",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Tim Elsass",
+            "email": "dev@tim.ph",
+            "homepage": "http://tim.ph",
+            "role": "Developer"
+        }
+    ]
+}
