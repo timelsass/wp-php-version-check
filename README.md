@@ -3,7 +3,13 @@ Composer package to verify that WordPress and PHP versions satisfy a minimum ver
 
 -------------------------------------------
 
-What does it do?  If an environment does not meet the minimum PHP or WordPress version requirements, the plugin is deactivated and an error admin notice is shown in the admin dashboard.  The notice informs the user of the minimum requirements, and their current versions of WordPress and PHP so they can change their environment to satisfy the plugin's version requirements.  If the user activates the plugin through WP-CLI then a WP-CLI Warning is displayed informing them of the same information.
+## Why?
+
+I haven't really seen any reliable packages that perform this functionality whenever I needed it, so I figured I might as well make my own for future use cases.  Most of the ones I found don't deactivate the plugin if the version requirements aren't met, they leave the success admin notice up after activation with the error admin notice, they don't support WP-CLI activation cleanly, and only check either the PHP version or the WordPress version instead of both.  I wanted to create a package that does what I need, and assume someone else out there might want it as well! :)
+
+## What does it do?
+
+If an environment does not meet the minimum PHP or WordPress version requirements, the plugin is deactivated and an error admin notice is shown in the admin dashboard.  The notice informs the user of the minimum requirements, and their current versions of WordPress and PHP so they can change their environment to satisfy the plugin's version requirements.  If the user activates the plugin through WP-CLI then a WP-CLI Warning is displayed informing them of the same information.
 
 ## Installation
 
